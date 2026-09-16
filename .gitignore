@@ -1,0 +1,29 @@
+# Build trees
+/build/
+/out/
+/_build/
+/install/
+*.o
+*.obj
+*.exe
+*.dll
+*.lib
+*.pdb
+*.ilk
+*.exp
+*.idb
+*.log
+
+# Local scratch
+/tmp/
+/scratch/
+*.tmp
+*.store
+*.rfstore
+
+# Editors / OS
+.vs/
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini

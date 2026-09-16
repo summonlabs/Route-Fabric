@@ -1,0 +1,26 @@
+// Generated from include/routefabric/version.hpp.in by CMake.
+// The project version is the single source of truth for library, package and
+// executable version reporting.
+#ifndef ROUTEFABRIC_VERSION_HPP
+#define ROUTEFABRIC_VERSION_HPP
+
+#include <cstdint>
+#include <string_view>
+
+namespace routefabric {
+
+inline constexpr int kVersionMajor = @ROUTEFABRIC_VERSION_MAJOR@;
+inline constexpr int kVersionMinor = @ROUTEFABRIC_VERSION_MINOR@;
+inline constexpr int kVersionPatch = @ROUTEFABRIC_VERSION_PATCH@;
+inline constexpr std::string_view kVersionString = "@ROUTEFABRIC_VERSION_STRING@";
+
+// Representation versions are independent of the product version. They change
+// only when the on-disk or on-wire representation changes.
+inline constexpr std::uint32_t kPersistenceFormatVersion = 1;
+inline constexpr std::uint16_t kWireProtocolVersion = 1;
+
+inline constexpr std::uint32_t kWireFrameMagic = 0x52464652u;  // "RFFR"
+
+}  // namespace routefabric
+
+#endif  // ROUTEFABRIC_VERSION_HPP

@@ -1,0 +1,34 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+set(RouteFabric_VERSION "@PROJECT_VERSION@")
+
+set_and_check(RouteFabric_INCLUDE_DIR "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@")
+set_and_check(RouteFabric_LIBRARY_DIR "@PACKAGE_CMAKE_INSTALL_LIBDIR@")
+set_and_check(RouteFabric_TOOLS_DIR "@PACKAGE_CMAKE_INSTALL_BINDIR@")
+
+if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/RouteFabricTargets.cmake")
+  set(${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE
+    "RouteFabricTargets.cmake is missing from ${CMAKE_CURRENT_LIST_DIR}.")
+  set(${CMAKE_FIND_PACKAGE_NAME}_FOUND FALSE)
+  return()
+endif()
+
+if(NOT EXISTS "${RouteFabric_INCLUDE_DIR}/routefabric/version.hpp")
+  set(${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE
+    "RouteFabric headers are missing from ${RouteFabric_INCLUDE_DIR}.")
+  set(${CMAKE_FIND_PACKAGE_NAME}_FOUND FALSE)
+  return()
+endif()
+
+include("${CMAKE_CURRENT_LIST_DIR}/RouteFabricTargets.cmake")
+
+if(NOT TARGET SummonSoftwareLabs::RouteFabric)
+  set(${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE
+    "The imported target SummonSoftwareLabs::RouteFabric is not defined by RouteFabricTargets.cmake.")
+  set(${CMAKE_FIND_PACKAGE_NAME}_FOUND FALSE)
+  return()
+endif()
+
+check_required_components(RouteFabric)
