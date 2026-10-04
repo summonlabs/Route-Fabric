@@ -1,7 +1,6 @@
 # Route Fabric
 
-Route Fabric is the authoritative route-lifecycle and route-state runtime of the
-Distributed Fabric Infrastructure / Fabric OS stack. It answers one question:
+Route Fabric is the authoritative route-lifecycle and route-state runtime for data-center fabric infrastructure. It answers one question:
 
 > What route is authoritative for this destination under the current
 > control-plane epoch, which next-hop or authorized path does it bind to, what
