@@ -96,8 +96,10 @@ if(WIN32)
 endif()
 
 if(ROUTEFABRIC_ENABLE_ASAN)
-  target_compile_options(RouteFabric PUBLIC $<$<CONFIG:Debug,RelWithDebInfo,Release>:/fsanitize=address>)
-  target_link_options(RouteFabric PUBLIC $<$<CONFIG:Debug,RelWithDebInfo,Release>:/INCREMENTAL:NO>)
+  # AddressSanitizer without debug information is warning C5072, which /WX turns
+  # into a build failure in Release; /Zi and /DEBUG also give symbolized reports.
+  target_compile_options(RouteFabric PUBLIC "$<$<CONFIG:Debug,RelWithDebInfo,Release>:/fsanitize=address;/Zi>")
+  target_link_options(RouteFabric PUBLIC "$<$<CONFIG:Debug,RelWithDebInfo,Release>:/INCREMENTAL:NO;/DEBUG>")
 endif()
 
 # ---------------------------------------------------------------------------

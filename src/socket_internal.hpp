@@ -341,7 +341,13 @@ inline bool create_tcp_socket(const std::string& host, SocketHandle& out, bool& 
     return false;
   }
   int reuse = 1;
+#ifdef _WIN32
+  // SO_REUSEADDR on Windows lets a second socket bind a port that is still
+  // listening; exclusive use makes that second bind fail instead.
+  ::setsockopt(handle, SOL_SOCKET, SO_EXCLUSIVEADDRUSE, reinterpret_cast<const char*>(&reuse), sizeof(reuse));
+#else
   ::setsockopt(handle, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<const char*>(&reuse), sizeof(reuse));
+#endif
   out = handle;
   return true;
 }

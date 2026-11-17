@@ -440,3 +440,17 @@ RF_TEST(a_server_stop_with_live_sessions_is_clean) {
   }
   RF_CHECK_EQ(server.counters().sessions_closed, static_cast<std::uint64_t>(3));
 }
+
+RF_TEST(a_second_server_cannot_take_a_listening_port) {
+  auto harness = Harness::Create();
+  ServerConfig first_config;
+  RouteFabricServer first(first_config, harness->runtime.get(), &harness->backend);
+  RF_REQUIRE(first.Start().has_value());
+  ServerConfig second_config;
+  second_config.port = first.port();
+  RouteFabricServer second(second_config, harness->runtime.get(), &harness->backend);
+  // Two servers must never share one listening port: the second start fails.
+  RF_CHECK(!second.Start().has_value());
+  second.Stop();
+  first.Stop();
+}
